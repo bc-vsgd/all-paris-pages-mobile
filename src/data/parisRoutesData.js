@@ -1,9 +1,7 @@
-import React from "react";
 // import WomenPage from "./pages/parisData/WomenPage";
 // import WomenWalksPage from "./pages/parisData/WomenWalksPage";
 // import Spots121314Page from "./pages/parisData/Spots121314Page";
 // import Spots121314WalksPage from "./pages/parisData/Spots121314WalksPage";
-// import Header from "./components/Header";
 // import MoviesPage from "./pages/parisData/MoviesPage";
 // import PlaquesWW2Page from "./pages/parisData/PlaquesWW2Page";
 // import PlaquesPage from "./pages/parisData/PlaquesPage";
