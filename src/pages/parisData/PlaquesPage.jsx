@@ -5,22 +5,20 @@ import { MapContainer, TileLayer, Circle, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import useStore from "../../store/useStore";
 
-const ArcheologyPage = ({ title, url, src }) => {
-  const [places, setPlaces] = useState([]);
+const PlaquesPage = ({ title, url, src }) => {
+  const [plaques, setPlaques] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const userLocation = useStore((state) => state.userLocation);
-  console.log(userLocation);
 
   useEffect(() => {
     const fetchData = async () => {
-      let allPlaces = [];
+      let allPlaques = [];
       let start = 0;
       const limit = 100;
-      const maxRecords = 10000;
 
       try {
-        while (start < maxRecords) {
+        while (true) {
           const response = await axios.get(
             `${url}?start=${start}&limit=${limit}`
           );
@@ -30,11 +28,11 @@ const ArcheologyPage = ({ title, url, src }) => {
             break;
           }
 
-          allPlaces = [...allPlaces, ...results];
+          allPlaques = [...allPlaques, ...results];
           start += limit;
         }
 
-        setPlaces(allPlaces);
+        setPlaques(allPlaques);
         setLoading(false);
       } catch (err) {
         setError("Erreur lors du chargement des données");
@@ -81,67 +79,62 @@ const ArcheologyPage = ({ title, url, src }) => {
             pathOptions={{ color: "black", opacity: 1 }}
           />
         )}
-        {places.map(
-          (place, index) =>
-            place.geo_point_2d && (
+        {plaques.map(
+          (plaque, index) =>
+            plaque.geo_point_2d && (
               <Circle
-                key={`place-circle-${index}`}
-                center={[place.geo_point_2d.lat, place.geo_point_2d.lon]}
+                key={`plaque-circle-${index}`}
+                center={[plaque.geo_point_2d.lat, plaque.geo_point_2d.lon]}
                 radius={10}
                 pathOptions={{ color: "blue" }}
               >
                 <Popup>
-                  <Typography variant="body2" fontWeight="bold">
-                    {place.adresse} ({place.code_postal})
+                  <Typography variant="h6" fontWeight="bold">
+                    {plaque.titre}
                   </Typography>
                   <Box style={{ maxHeight: "150px", overflowY: "auto" }}>
-                    {place.responsable_operation && (
-                      <Typography variant="body2" fontWeight="bold" paragraph>
-                        {place.responsable_operation}
+                    {plaque.adresse && plaque.ardt && (
+                      <Typography variant="body2" paragraph>
+                        {plaque.adresse} ({plaque.ardt})
                       </Typography>
                     )}
-                    {(place.nature_operation || place.date_operation) && (
+                    {plaque.retranscription && (
                       <Typography variant="body2" paragraph>
-                        {place.nature_operation}{" "}
-                        {place.date_operation && (
-                          <strong>({place.date_operation})</strong>
-                        )}
+                        {plaque.retranscription
+                          .split(/[\/|]/)
+                          .map((line, i) => (
+                            <span key={i}>
+                              {line}
+                              <br />
+                            </span>
+                          ))}
                       </Typography>
                     )}
-                    {place.synthese && (
+                    {plaque.siecle && (
                       <Typography variant="body2" paragraph>
-                        {place.synthese}
+                        <strong>Siècle:</strong> {plaque.siecle}
                       </Typography>
                     )}
-                    {place.prehistoire && (
+                    {(plaque.periode_1 || plaque.periode_2) && (
                       <Typography variant="body2" paragraph>
-                        <strong>Préhistoire:</strong> {place.prehistoire}
+                        <strong>Période:</strong> {plaque.periode_1}{" "}
+                        {plaque.periode_2 && `, ${plaque.periode_2}`}
                       </Typography>
                     )}
-                    {place.protohistoire && (
+                    {(plaque.objet_1 || plaque.objet_2) && (
                       <Typography variant="body2" paragraph>
-                        <strong>Protohistoire:</strong> {place.protohistoire}
+                        <strong>Objet:</strong> {plaque.objet_1}{" "}
+                        {plaque.objet_2 && `, ${plaque.objet_2}`}
                       </Typography>
                     )}
-                    {place.antiquite && (
+                    {plaque.personnalite && (
                       <Typography variant="body2" paragraph>
-                        <strong>Antiquité:</strong> {place.antiquite}
+                        <strong>Personnalité:</strong> {plaque.personnalite}
                       </Typography>
                     )}
-                    {place.moyen_age && (
+                    {plaque.pays && (
                       <Typography variant="body2" paragraph>
-                        <strong>Moyen-Age:</strong> {place.moyen_age}
-                      </Typography>
-                    )}
-                    {place.temps_modernes && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Temps modernes:</strong> {place.temps_modernes}
-                      </Typography>
-                    )}
-                    {place.epoque_contemporaine && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Époque contemporaine:</strong>{" "}
-                        {place.epoque_contemporaine}
+                        <strong>Pays:</strong> {plaque.pays}
                       </Typography>
                     )}
                   </Box>
@@ -154,4 +147,4 @@ const ArcheologyPage = ({ title, url, src }) => {
   );
 };
 
-export default ArcheologyPage;
+export default PlaquesPage;

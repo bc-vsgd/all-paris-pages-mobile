@@ -5,22 +5,20 @@ import { MapContainer, TileLayer, Circle, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import useStore from "../../store/useStore";
 
-const ArcheologyPage = ({ title, url, src }) => {
-  const [places, setPlaces] = useState([]);
+const PlaquesWW2Page = ({ title, url, src }) => {
+  const [plaques, setPlaques] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const userLocation = useStore((state) => state.userLocation);
-  console.log(userLocation);
 
   useEffect(() => {
     const fetchData = async () => {
-      let allPlaces = [];
+      let allPlaques = [];
       let start = 0;
       const limit = 100;
-      const maxRecords = 10000;
 
       try {
-        while (start < maxRecords) {
+        while (true) {
           const response = await axios.get(
             `${url}?start=${start}&limit=${limit}`
           );
@@ -30,11 +28,11 @@ const ArcheologyPage = ({ title, url, src }) => {
             break;
           }
 
-          allPlaces = [...allPlaces, ...results];
+          allPlaques = [...allPlaques, ...results];
           start += limit;
         }
 
-        setPlaces(allPlaces);
+        setPlaques(allPlaques);
         setLoading(false);
       } catch (err) {
         setError("Erreur lors du chargement des données");
@@ -81,67 +79,36 @@ const ArcheologyPage = ({ title, url, src }) => {
             pathOptions={{ color: "black", opacity: 1 }}
           />
         )}
-        {places.map(
-          (place, index) =>
-            place.geo_point_2d && (
+        {plaques.map(
+          (plaque, index) =>
+            plaque.xy && (
               <Circle
-                key={`place-circle-${index}`}
-                center={[place.geo_point_2d.lat, place.geo_point_2d.lon]}
+                key={`plaque-circle-${index}`}
+                center={[plaque.xy.lat, plaque.xy.lon]}
                 radius={10}
                 pathOptions={{ color: "blue" }}
               >
                 <Popup>
-                  <Typography variant="body2" fontWeight="bold">
-                    {place.adresse} ({place.code_postal})
-                  </Typography>
                   <Box style={{ maxHeight: "150px", overflowY: "auto" }}>
-                    {place.responsable_operation && (
-                      <Typography variant="body2" fontWeight="bold" paragraph>
-                        {place.responsable_operation}
+                    {plaque.commemore && (
+                      <Typography variant="body2" paragraph>
+                        <strong>{plaque.commemore}</strong>
                       </Typography>
                     )}
-                    {(place.nature_operation || place.date_operation) && (
+                    {plaque.adresse_complete && (
                       <Typography variant="body2" paragraph>
-                        {place.nature_operation}{" "}
-                        {place.date_operation && (
-                          <strong>({place.date_operation})</strong>
-                        )}
+                        {plaque.adresse_complete}
                       </Typography>
                     )}
-                    {place.synthese && (
+                    {plaque.precision_adresse &&
+                      plaque.precision_adresse !== "NULL" && (
+                        <Typography variant="body2" paragraph>
+                          {plaque.precision_adresse}
+                        </Typography>
+                      )}
+                    {plaque.empty && (
                       <Typography variant="body2" paragraph>
-                        {place.synthese}
-                      </Typography>
-                    )}
-                    {place.prehistoire && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Préhistoire:</strong> {place.prehistoire}
-                      </Typography>
-                    )}
-                    {place.protohistoire && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Protohistoire:</strong> {place.protohistoire}
-                      </Typography>
-                    )}
-                    {place.antiquite && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Antiquité:</strong> {place.antiquite}
-                      </Typography>
-                    )}
-                    {place.moyen_age && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Moyen-Age:</strong> {place.moyen_age}
-                      </Typography>
-                    )}
-                    {place.temps_modernes && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Temps modernes:</strong> {place.temps_modernes}
-                      </Typography>
-                    )}
-                    {place.epoque_contemporaine && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Époque contemporaine:</strong>{" "}
-                        {place.epoque_contemporaine}
+                        <strong>Arrondissement:</strong> {plaque.empty}
                       </Typography>
                     )}
                   </Box>
@@ -154,4 +121,4 @@ const ArcheologyPage = ({ title, url, src }) => {
   );
 };
 
-export default ArcheologyPage;
+export default PlaquesWW2Page;

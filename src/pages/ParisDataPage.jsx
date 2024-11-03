@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import routesData from "../../data/parisRoutesData";
+import routesData from "../data/parisRoutesData";
 
 function ParisDataPage() {
   return (

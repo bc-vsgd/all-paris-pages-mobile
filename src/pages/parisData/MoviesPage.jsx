@@ -5,12 +5,13 @@ import { MapContainer, TileLayer, Circle, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import useStore from "../../store/useStore";
 
-const ArcheologyPage = ({ title, url, src }) => {
+const MoviesPage = ({ title, url, src }) => {
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [oldestYear, setOldestYear] = useState(null);
+  const [newestYear, setNewestYear] = useState(null);
   const userLocation = useStore((state) => state.userLocation);
-  console.log(userLocation);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +36,17 @@ const ArcheologyPage = ({ title, url, src }) => {
         }
 
         setPlaces(allPlaces);
+
+        // Find the oldest and newest year
+        const years = allPlaces
+          .map((place) => place.annee_tournage)
+          .filter((year) => year)
+          .map(Number);
+        if (years.length > 0) {
+          setOldestYear(Math.min(...years));
+          setNewestYear(Math.max(...years));
+        }
+
         setLoading(false);
       } catch (err) {
         setError("Erreur lors du chargement des données");
@@ -61,6 +73,12 @@ const ArcheologyPage = ({ title, url, src }) => {
       <Typography variant="subtitle1" gutterBottom>
         Source: {src}
       </Typography>
+      {oldestYear && newestYear && (
+        <Typography variant="h6" gutterBottom>
+          Année la plus ancienne: {oldestYear}, Année la plus récente:{" "}
+          {newestYear}
+        </Typography>
+      )}
       <MapContainer
         style={{ height: "500px", width: "100%" }}
         center={[48.8566, 2.3522]}
@@ -88,60 +106,36 @@ const ArcheologyPage = ({ title, url, src }) => {
                 key={`place-circle-${index}`}
                 center={[place.geo_point_2d.lat, place.geo_point_2d.lon]}
                 radius={10}
-                pathOptions={{ color: "blue" }}
+                pathOptions={{ color: "red" }}
               >
                 <Popup>
-                  <Typography variant="body2" fontWeight="bold">
-                    {place.adresse} ({place.code_postal})
+                  <Typography variant="h6" fontWeight="bold">
+                    {place.nom_tournage}
                   </Typography>
                   <Box style={{ maxHeight: "150px", overflowY: "auto" }}>
-                    {place.responsable_operation && (
-                      <Typography variant="body2" fontWeight="bold" paragraph>
-                        {place.responsable_operation}
+                    {place.adresse_lieu && place.ardt_lieu && (
+                      <Typography variant="body2" paragraph>
+                        {place.adresse_lieu}, arrt: {place.ardt_lieu}
                       </Typography>
                     )}
-                    {(place.nature_operation || place.date_operation) && (
+                    {place.nom_realisateur && (
                       <Typography variant="body2" paragraph>
-                        {place.nature_operation}{" "}
-                        {place.date_operation && (
-                          <strong>({place.date_operation})</strong>
-                        )}
+                        <strong>Réalisateur:</strong> {place.nom_realisateur}
                       </Typography>
                     )}
-                    {place.synthese && (
+                    {place.annee_tournage && (
                       <Typography variant="body2" paragraph>
-                        {place.synthese}
+                        {place.annee_tournage}
                       </Typography>
                     )}
-                    {place.prehistoire && (
+                    {place.type_tournage && (
                       <Typography variant="body2" paragraph>
-                        <strong>Préhistoire:</strong> {place.prehistoire}
+                        {place.type_tournage}
                       </Typography>
                     )}
-                    {place.protohistoire && (
+                    {place.nom_producteur && (
                       <Typography variant="body2" paragraph>
-                        <strong>Protohistoire:</strong> {place.protohistoire}
-                      </Typography>
-                    )}
-                    {place.antiquite && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Antiquité:</strong> {place.antiquite}
-                      </Typography>
-                    )}
-                    {place.moyen_age && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Moyen-Age:</strong> {place.moyen_age}
-                      </Typography>
-                    )}
-                    {place.temps_modernes && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Temps modernes:</strong> {place.temps_modernes}
-                      </Typography>
-                    )}
-                    {place.epoque_contemporaine && (
-                      <Typography variant="body2" paragraph>
-                        <strong>Époque contemporaine:</strong>{" "}
-                        {place.epoque_contemporaine}
+                        {place.nom_producteur}
                       </Typography>
                     )}
                   </Box>
@@ -154,4 +148,4 @@ const ArcheologyPage = ({ title, url, src }) => {
   );
 };
 
-export default ArcheologyPage;
+export default MoviesPage;
