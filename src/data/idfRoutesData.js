@@ -6,7 +6,7 @@ import SportsSitesComp from "../components/idfData/SportsSitesComp";
 import UnescoWorldHeritageComp from "../components/idfData/UnescoWorldHeritageComp";
 import VillesPaysArtHistoireComp from "../components/idfData/VillesPaysArtHistoireComp";
 import IndustrialHeritageMHComp from "../components/idfData/IndustrialHeritageMHComp";
-import RemarkableContemporaryArchitecture from "../components/idfData/remarkableContemporaryArchitecture";
+import RemarkableContemporaryArchitecture from "../components/idfData/RemarkableContemporaryArchitecture";
 import GourmetHeritageComp from "../components/idfData/GourmetHeritageComp";
 
 const idfRoutesData = [
