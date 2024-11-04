@@ -57,11 +57,11 @@ function MapPage({ url, title, src, component: Component }) {
       >
         Open data Région Ile-de-France
       </Button>
-      <h1>{title}</h1>
+      <h3>{title}</h3>
       <p>Source: {src}</p>
-      <a href={url[0]} target="_blank" rel="noopener noreferrer">
+      {/* <a href={url[0]} target="_blank" rel="noopener noreferrer">
         Consulter les données
-      </a>
+      </a> */}
       <div>
         <MapContainer
           style={{ height: "500px", width: "100%" }}

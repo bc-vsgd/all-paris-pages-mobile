@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { CircularProgress, Typography, Box } from "@mui/material";
+import { Link } from "react-router-dom";
+import { CircularProgress, Typography, Box, Button } from "@mui/material";
 import { MapContainer, TileLayer, Circle, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import useStore from "../../store/useStore";
@@ -54,8 +55,17 @@ const ArcheologyPage = ({ title, url, src }) => {
   }
 
   return (
-    <Box padding={2} marginTop={"150px"}>
-      <Typography variant="h4" gutterBottom>
+    <Box padding={2}>
+      <Button
+        variant="contained"
+        color="primary"
+        component={Link}
+        to="/paris-data"
+        style={{ margin: "10px" }}
+      >
+        Open data Paris
+      </Button>
+      <Typography variant="h6" gutterBottom>
         {title}
       </Typography>
       <Typography variant="subtitle1" gutterBottom>

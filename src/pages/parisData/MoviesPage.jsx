@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { CircularProgress, Typography, Box } from "@mui/material";
+import { CircularProgress, Typography, Box, Button } from "@mui/material";
 import { MapContainer, TileLayer, Circle, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import useStore from "../../store/useStore";
@@ -66,19 +67,28 @@ const MoviesPage = ({ title, url, src }) => {
   }
 
   return (
-    <Box padding={2} marginTop={"150px"}>
-      <Typography variant="h4" gutterBottom>
-        {title}
+    <Box padding={2}>
+      <Button
+        variant="contained"
+        color="primary"
+        component={Link}
+        to="/paris-data"
+        style={{ margin: "10px" }}
+      >
+        Open data Paris
+      </Button>
+      <Typography variant="h6" gutterBottom>
+        {`${title} 2016-2022`}
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
         Source: {src}
       </Typography>
-      {oldestYear && newestYear && (
+      {/* {oldestYear && newestYear && (
         <Typography variant="h6" gutterBottom>
           Année la plus ancienne: {oldestYear}, Année la plus récente:{" "}
           {newestYear}
         </Typography>
-      )}
+      )} */}
       <MapContainer
         style={{ height: "500px", width: "100%" }}
         center={[48.8566, 2.3522]}
