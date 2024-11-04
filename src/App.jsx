@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ParisDataPage from "./pages/ParisDataPage";
 import IdfDataPage from "./pages/IdfDataPage";
+import MapPage from "./pages/idfData/IdfMapPage";
 import Header from "./components/Header";
 import parisRoutesData from "./data/parisRoutesData";
+import idfRoutesData from "./data/idfRoutesData";
 import useStore from "./store/useStore";
 
 function App() {
@@ -39,6 +41,20 @@ function App() {
             />
           )
         )}
+        {idfRoutesData.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            element={
+              <MapPage
+                url={route.url}
+                title={route.title}
+                src={route.src}
+                component={route.component}
+              />
+            }
+          />
+        ))}
       </Routes>
     </Router>
   );
