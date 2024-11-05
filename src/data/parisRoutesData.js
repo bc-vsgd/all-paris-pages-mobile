@@ -1,89 +1,83 @@
-import WomenPage from "../pages/parisData/WomenPage";
-import WomenWalksPage from "../pages/parisData/WomenWalksPage";
-import Spots121314Page from "../pages/parisData/Spots121314Page";
-import Spots121314WalksPage from "../pages/parisData/Spots121314WalksPage";
-import PlaquesWW2Page from "../pages/parisData/PlaquesWW2Page";
-import PlaquesPage from "../pages/parisData/PlaquesPage";
-import ArcheologyPage from "../pages/parisData/ArcheologyPage";
-import MoviesPage from "../pages/parisData/MoviesPage";
-import CurrentLaneNamingPage from "../pages/parisData/CurrentLaneNamingPage";
-import Flood1910Page from "../pages/parisData/Flood1910Page";
+import ArcheologyComp from "../components/parisData/ArcheologyComp";
+import MoviesComp from "../components/parisData/MoviesComp";
+import PlaquesWW2Comp from "../components/parisData/PlaquesWW2Comp";
+import PlaquesComp from "../components/parisData/PlaquesComp";
+import WomenComp from "../components/parisData/WomenComp";
+import CurrentLaneNamingComp from "../components/parisData/CurrentLaneNamingComp";
+import Flood1910Comp from "../components/parisData/Flood1910Comp";
+import Spots121314Comp from "../components/parisData/Spots121314Comp";
 
 const routesData = [
   {
     path: "/archeology-places",
-    component: ArcheologyPage,
+    component: ArcheologyComp,
     title: "Référentiel archéologique",
-    url: "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/referentiel-archeologique-de-paris/records",
+    url: [
+      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/referentiel-archeologique-de-paris",
+    ],
     src: "Open data Paris",
   },
   {
     path: "/movies-places",
-    component: MoviesPage,
+    component: MoviesComp,
     title: "Lieux de tournage",
-    url: "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/lieux-de-tournage-a-paris/records",
+    url: [
+      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/lieux-de-tournage-a-paris",
+    ],
     src: "Open data Paris",
   },
   {
     path: "/plaques-ww2",
-    component: PlaquesWW2Page,
+    component: PlaquesWW2Comp,
     title: "Plaques commémoratives 1939-1945",
-    url: "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/plaques_commemoratives_1939-1945/records",
+    url: [
+      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/plaques_commemoratives_1939-1945",
+    ],
     src: "Open data Paris",
   },
   {
     path: "/plaques",
-    component: PlaquesPage,
+    component: PlaquesComp,
     title: "Plaques commémoratives",
-    url: "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/plaques_commemoratives/records",
+    url: [
+      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/plaques_commemoratives",
+    ],
     src: "Open data Paris",
   },
   {
     path: "/women-description",
-    component: WomenPage,
-    title: "Femmes illustres - Portraits",
-    url: "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/femmes-illustres-a-paris-portraits/records",
-    src: "Open data Paris",
-  },
-  {
-    path: "/women-walks",
-    component: WomenWalksPage,
-    title: "Femmes illustres - Parcours + spots",
+    component: WomenComp,
+    title: "Femmes illustres",
     url: [
-      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/femmes-illustres-a-paris-parcours/records",
-      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/femmes-illustres-a-paris-portraits/records",
+      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/femmes-illustres-a-paris-portraits",
     ],
     src: "Open data Paris",
   },
   {
     path: "/121314-poi",
-    component: Spots121314Page,
-    title: "12è 13è 14è - Spots",
-    url: "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/paris-autrement-balades-dans-les-arrondissements-peripheriques-poi/records",
-    src: "Open data Paris",
-  },
-  {
-    path: "/121314-walks",
-    component: Spots121314WalksPage,
-    title: "12è 13è 14è - Parcours + spots",
+    component: Spots121314Comp,
+    title: "12è 13è 14è",
     url: [
-      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/paris-autrement-balades-dans-les-arrondissements-peripheriques-parcours/records",
-      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/paris-autrement-balades-dans-les-arrondissements-peripheriques-poi/records",
+      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/paris-autrement-balades-dans-les-arrondissements-peripheriques-poi",
     ],
     src: "Open data Paris",
   },
   {
     path: "/current-lanes",
-    component: CurrentLaneNamingPage,
+    component: CurrentLaneNamingComp,
     title: "Dénomination des voies actuelles",
-    url: "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/denominations-emprises-voies-actuelles/records",
+    url: [
+      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/denominations-emprises-voies-actuelles",
+    ],
     src: "Open data Paris",
   },
   {
     path: "/1910-flood",
-    component: Flood1910Page,
+    component: Flood1910Comp,
     title: "Caves inondées en 1910",
-    url: "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/zones-de-caves-inondees-1910/records",
+    url: [
+      "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/zones-de-caves-inondees-1910",
+    ],
     src: "Open data Paris",
   },
 ];
